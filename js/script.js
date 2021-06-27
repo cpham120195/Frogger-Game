@@ -47,18 +47,55 @@ class Frogger {
         this.height = this.spriteHeight / 5;
 
         //x and y coordinates where frog appears
-        this.x = canvas.width/2 - this.width/2;
+        this.x = canvas.width/ 2 - this.width/ 2;
         this.y = canvas.height - this.height - 40;
         this.moving = false;
         this.frameX = 0;
         this.frameY = 0;
     }
     update() {
-        console.log('update');
-    }
+        if(keys[38]) {
+            if (this.moving === false) {
+                this.y -= grid;
+                this.moving = true;
+            }
+
+        }
+        if(keys[40]) { //down movement
+            if(this.moving === false && this.y < canvas.height - this.height * 2) {
+                this.y += grid;
+                this.moving = true;
+
+            }
+         
+         }
+
+         if(keys[37]) { //left movement 
+            if(this.moving === false && this.x > this.width){
+                this.x -= grid;
+                this.moving = true;
+            }
+         
+         }
+
+         if(keys[39]) { //right movement 
+            if(this.moving === false && this.x < canvas.width - this.width * 2) {
+                this.x += grid;
+                this.moving = true;
+            }
+         
+         }
+         //if player goes and scores
+
+         if (this.x < 0) scored();
+    
+}
     draw() {
         ctx3.fillStyle = 'green';
         ctx3.fillRect(this.x, this.y, this.width, this.height);
+    }
+    jump() {
+        // console.log('jump');
     }
 };
 
@@ -75,3 +112,28 @@ function animate() {
 }
 
 animate();
+
+//event listeners
+
+window.addEventListener('keydown', function(e) {
+    keys = [];
+    keys[e.key] = true;
+    if (keys[37] || keys[38] || keys[39] || keys[40]) { //arrow keys 
+        frogger.jump();
+
+    }
+});
+
+window.addEventListener('keyup', function(e) {
+    delete keys[e.key];
+    frogger.moving = false;
+})
+
+//create score function
+function scored() {
+    score++; //add score by 1 if player wons
+    gamespeed += 0.05;
+    //reset the frog
+    frogger.x = canvas.width/2 - frogger.width/2;
+    frogger.y = canvas.height - frogger.height - 40;
+}
