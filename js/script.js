@@ -54,7 +54,7 @@ class Frogger {
         this.frameY = 0;
     }
     update() {
-        if(keys[38]) {
+        if(keys[38]) { //up movement
             if (this.moving === false) {
                 this.y -= grid;
                 this.moving = true;
@@ -87,7 +87,7 @@ class Frogger {
          }
          //if player goes and scores
 
-         if (this.x < 0) scored();
+         if (this.y < 0) scored();
     
 }
     draw() {
@@ -117,7 +117,7 @@ animate();
 
 window.addEventListener('keydown', function(e) {
     keys = [];
-    keys[e.key] = true;
+    keys[e.keyCode] = true;
     if (keys[37] || keys[38] || keys[39] || keys[40]) { //arrow keys 
         frogger.jump();
 
@@ -125,15 +125,43 @@ window.addEventListener('keydown', function(e) {
 });
 
 window.addEventListener('keyup', function(e) {
-    delete keys[e.key];
+    delete keys[e.keyCode];
     frogger.moving = false;
 })
 
 //create score function
 function scored() {
     score++; //add score by 1 if player wons
-    gamespeed += 0.05;
+    gameSpeed += 0.05;
     //reset the frog
     frogger.x = canvas.width/2 - frogger.width/2;
     frogger.y = canvas.height - frogger.height - 40;
+}
+
+
+//creating obstacle class
+
+class Obstacle {
+    constructor(x, y, width, height, speed, type) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.type = type;
+    }
+    draw() {
+        ctx1.fillRect(this.x, this.y, this.width, this.height);
+    }
+    update() {
+        this.x += this.speed * gameSpeed;
+    }
+}
+
+function initObstacle() {
+    //lane1
+    for(let i = 0; i < 2; i++) {
+        let x = i * 350;
+        carsArray.push(new Obstacle(x,));
+    }
 }
