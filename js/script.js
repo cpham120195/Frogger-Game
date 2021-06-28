@@ -108,6 +108,7 @@ function animate() {
     ctx3.clearRect(0,0, canvas.width, canvas.height);
     frogger.draw();
     frogger.update();
+    handleObstacles();
     requestAnimationFrame(animate);
 }
 
@@ -151,17 +152,29 @@ class Obstacle {
         this.type = type;
     }
     draw() {
+        ctx1.fillStyle = 'red';
         ctx1.fillRect(this.x, this.y, this.width, this.height);
     }
     update() {
         this.x += this.speed * gameSpeed;
+        if(this.x > canvas.width + this.width) {
+            this.x = 0 - this.width;
+        };
     }
 }
 
-function initObstacle() {
+function initObstacles() {
     //lane1
     for(let i = 0; i < 2; i++) {
         let x = i * 350;
-        carsArray.push(new Obstacle(x,));
+        carsArray.push(new Obstacle(x, canvas.height - grid * 2 -20, grid, grid, 1, 'car'));
+    }
+}
+initObstacles();
+
+function handleObstacles() {
+    for(let i = 0; i < carsArray.length; i++) {
+        carsArray[i].update();
+        carsArray[i].draw();
     }
 }
