@@ -42,8 +42,7 @@ const logsArray = [];
 const background_lvl2 = new Image();
 background_lvl2.src = 'background_lvl2.png';
 
-const collisions = new Image();
-collisions.src = 'collisions.png';
+
 
 
 class Frogger {
@@ -265,7 +264,6 @@ function handleObstacles() {
     //collision with car
     for(let i = 0; i < carsArray.length; i++) {
         if (collision(frogger, carsArray[i])) {
-            ctx4.drawImage(collisions, 0, 100, 100, 100, frogger.x, froggy.y, 50, 50);
             resetGame();
         }
     }
