@@ -7,5 +7,7 @@ Frogger, a classic arcade action game that is known and loved by countless of pe
 
 Start the game by using the arrow keys as a keystroke to jump the frog. The objective of the game is to dodge the obstacles by making it to the otherside. Each time the frog is safe by reaching the otherside, your score will increase and so will gamespeed. If the frog is struck by an obstacle or falls into the water then score will reset. 
 
-Technologies Used: HTML, CSS, JS, Git, GitHub.
+# Technologies Used 
+
+HTML, CSS, JS, Git, GitHub.
 
