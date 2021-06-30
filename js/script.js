@@ -31,7 +31,7 @@ score = 0; //score starting at 0
 let gameSpeed = 1; //game speed increases when scored
 let safe = false;
 
-
+//obstacles to be pushed 
 const carsArray = [];
 const logsArray = [];
 
@@ -44,27 +44,26 @@ background_lvl2.src = 'background_lvl2.png';
 
 class Frogger {
     constructor() {
-        this.spriteWidth = 250;
-        this.spriteHeight = 250;
+        this.spriteWidth = 250; //width of one frame
+        this.spriteHeight = 250; //height of one frame
         this.width = this.spriteWidth / 5;
         this.height = this.spriteHeight / 5;
 
         //x and y coordinates where frog appears
         this.x = canvas.width/ 2 - this.width/ 2;
         this.y = canvas.height - this.height - 40;
-        this.moving = false;
-        this.frameX = 0;
-        this.frameY = 0;
+        this.moving = false; //stop frog from moving too quickly
+       
     }
     update() {
-        if(keys[38]) { //up movement
+        if(keys['ArrowUp']) { //up movement
             if (this.moving === false) {
                 this.y -= grid;
                 this.moving = true;
             }
 
         }
-        if(keys[40]) { //down movement
+        if(keys['ArrowDown']) { //down movement
             if(this.moving === false && this.y < canvas.height - this.height * 2) {
                 this.y += grid;
                 this.moving = true;
@@ -73,7 +72,7 @@ class Frogger {
          
          }
 
-         if(keys[37]) { //left movement 
+         if(keys['ArrowLeft']) { //left movement 
             if(this.moving === false && this.x > this.width){
                 this.x -= grid;
                 this.moving = true;
@@ -81,7 +80,7 @@ class Frogger {
          
          }
 
-         if(keys[39]) { //right movement 
+         if(keys['ArrowRight']) { //right movement 
             if(this.moving === false && this.x < canvas.width - this.width * 2) {
                 this.x += grid;
                 this.moving = true;
@@ -123,15 +122,15 @@ animate();
 
 window.addEventListener('keydown', function(e) {
     keys = [];
-    keys[e.keyCode] = true;
-    if (keys[37] || keys[38] || keys[39] || keys[40]) { //arrow keys 
+    keys[e.code] = true;
+    if (keys['ArrowsLeft'] || keys['ArrowsRight'] || keys['ArrowsUp'] || keys[ArrowsDown]) { //arrow keys 
         frogger.jump();
 
     }
 });
 
 window.addEventListener('keyup', function(e) {
-    delete keys[e.keyCode];
+    delete keys[e.code];
     frogger.moving = false;
 })
 
@@ -288,4 +287,4 @@ function handleObstacles() {
         
 
     }
-}
+};
