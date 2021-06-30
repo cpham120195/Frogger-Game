@@ -46,12 +46,15 @@ class Frogger {
     constructor() {
         this.spriteWidth = 250; //width of one frame
         this.spriteHeight = 250; //height of one frame
+
+        
         this.width = this.spriteWidth / 5;
         this.height = this.spriteHeight / 5;
 
         //x and y coordinates where frog appears
         this.x = canvas.width/ 2 - this.width/ 2;
         this.y = canvas.height - this.height - 40;
+        
         this.moving = false; //stop frog from moving too quickly
        
     }
