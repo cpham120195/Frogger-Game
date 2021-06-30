@@ -28,8 +28,6 @@ canvas5.height = 600;
 const grid = 80; //80 * 80 pixels
 let keys = []; //holding the keys press on keybaord
 score = 0; //score starting at 0
-let collisionCount = 0;
-let frame = 0; 
 let gameSpeed = 1; //game speed increases when scored
 let safe = false;
 
@@ -140,7 +138,7 @@ window.addEventListener('keyup', function(e) {
 //create score function
 function scored() {
     score++; //add score by 1 if player wons
-    gameSpeed += 0.05;
+    gameSpeed += .2;
     //reset the frog
     frogger.x = canvas.width/2 - frogger.width/2;
     frogger.y = canvas.height - frogger.height - 40;
@@ -154,8 +152,9 @@ function handleScoreboard() {
     ctx4.strokeText('Score', 265, 15);
     ctx4.font = '60px Sans-serif';
     ctx4.fillText(score, 270, 65);
-    // ctx4.font = '15px Sans-serif';
-    // ctx4.strokeText('Game Speed: ' + gameSpeed, 10, 195);
+
+    ctx4.font = '15px Sans-serif';
+    ctx4.strokeText('Game Speed: ' + gameSpeed, 10, 130);
 }
 
 
@@ -173,6 +172,7 @@ function resetGame() {
     frogger.x = canvas.width/2 - frogger.width/2;
     frogger.y = canvas.height - frogger.height - 40;
     score = 0;
+    gameSpeed = 1;
 
 }
 
@@ -188,9 +188,12 @@ class Obstacle {
         this.type = type;
     }
     draw() {
-        ctx1.fillStyle = 'red';
-        ctx1.fillRect(this.x, this.y, this.width, this.height);
+        ctx2.fillStyle = 'red';
+        ctx2.fillRect(this.x, this.y, this.width, this.height);
+
+       
     }
+    
     update() {
         //moving cars will reset once it passes the grid 
         this.x += this.speed * gameSpeed;
