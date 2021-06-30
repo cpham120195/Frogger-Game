@@ -38,6 +38,13 @@ const rippleArray = [];
 const carsArray = [];
 const logsArray = [];
 
+//images
+const background_lvl2 = new Image();
+background_lvl2.src = 'background_lvl2.png';
+
+const collisions = new Image();
+collisions.src = 'collisions.png';
+
 
 class Frogger {
     constructor() {
@@ -106,9 +113,11 @@ const frogger = new Frogger();
 
 function animate() {
     ctx3.clearRect(0,0, canvas.width, canvas.height);
+    ctx2.drawImage(background_lvl2, 0, 0, canvas.width, canvas.height);
     frogger.draw();
     frogger.update();
     handleObstacles();
+    handleScoreboard();
     requestAnimationFrame(animate);
 }
 
@@ -139,18 +148,35 @@ function scored() {
     frogger.y = canvas.height - frogger.height - 40;
 }
 
+//handle score
+function handleScoreboard() {
+    ctx4.fillStyle = 'black';
+    ctx4.strokeStyle = 'black';
+    ctx4.font = '15px Sans-serif';
+    ctx4.strokeText('Score', 265, 15);
+    ctx4.font = '60px Sans-serif';
+    ctx4.fillText(score, 270, 65);
+    ctx4.font = '15px Sans-serif';
+    ctx4.strokeText('Game Speed: ' + gameSpeed, 10, 195);
+}
+
 
 //collision detection between rectangles
 
 function collision(first, second) {
-    return !(first.x > second.x + second.width ||
-        first.x + first.width < second.x || 
-        first.y > second.y + second.height ||
-        first.y + first.height < second.y);
+    return !( first.x > second.x + second.width ||
+                first.x + first.width < second.x || 
+                first.y > second.y + second.height ||
+                first.y + first.height < second.y);
         //if any statements are true there is no collision
-        
 }
 
+function resetGame() {
+    frogger.x = canvas.width/2 - frogger.width/2;
+    frogger.y = canvas.height - frogger.height - 40;
+    score = 0;
+
+}
 
 //creating obstacle class for the cars 
 
@@ -236,11 +262,11 @@ function handleObstacles() {
         logsArray[i].update();
         logsArray[i].draw();
     }
-    // //collision with car
-    // for(let i = 0; i < carsArray.length; i++) {
-    //     if (collision(frogger,carsArray[i])) {
-    //         ctx4.drawImage(collision, 0, 100, 100, frogger.x, froggy.y, 50, 50);
-    //         resetGame();
-    //     }
-    // }
+    //collision with car
+    for(let i = 0; i < carsArray.length; i++) {
+        if (collision(frogger, carsArray[i])) {
+            ctx4.drawImage(collisions, 0, 100, 100, 100, frogger.x, froggy.y, 50, 50);
+            resetGame();
+        }
+    }
 }
