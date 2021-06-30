@@ -31,10 +31,9 @@ score = 0; //score starting at 0
 let collisionCount = 0;
 let frame = 0; 
 let gameSpeed = 1; //game speed increases when scored
+let safe = false;
 
-const particleArray = []; 
-const maxParticles = 300; 
-const rippleArray = [];
+
 const carsArray = [];
 const logsArray = [];
 
@@ -155,8 +154,8 @@ function handleScoreboard() {
     ctx4.strokeText('Score', 265, 15);
     ctx4.font = '60px Sans-serif';
     ctx4.fillText(score, 270, 65);
-    ctx4.font = '15px Sans-serif';
-    ctx4.strokeText('Game Speed: ' + gameSpeed, 10, 195);
+    // ctx4.font = '15px Sans-serif';
+    // ctx4.strokeText('Game Speed: ' + gameSpeed, 10, 195);
 }
 
 
@@ -266,5 +265,24 @@ function handleObstacles() {
         if (collision(frogger, carsArray[i])) {
             resetGame();
         }
+    }
+
+    //collisions with logs/turtles
+
+    if(frogger.y < 250 && frogger.y > 100) {
+        safe = false;
+
+        for(let i = 0; i < logsArray.length; i++) {
+            if(collision(frogger, logsArray[i])) {
+                frogger.x += logsArray[i].speed;
+                safe = true;
+            }
+        }
+
+        if( !safe) {
+            resetGame();
+        }
+        
+
     }
 }
